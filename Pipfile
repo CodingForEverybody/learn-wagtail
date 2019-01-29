@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+wagtail = "<2.5,>=2.4"
+Django = ">=2.1,<2.2"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
