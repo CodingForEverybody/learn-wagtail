@@ -4,9 +4,9 @@
 
 {% block content %}
 
-    {% image self.banner_image fill-900x400 as img %}
+    {% image self.banner_image width-1500 as img %}
 
-    <div class="jumbotron" style="background-image: url('{{ img.url }}'); background-size: contain; color: #fff !important">
+    <div class="jumbotron" style="background-image: url('{{ img.url }}'); background-size: cover; background-position: center center; color: #fff !important">
         <h1 class="display-4">{{ self.banner_title }}</h1>
         <div class="lead">{{ self.banner_subtitle|richtext }}</div>
         {% if self.banner_cta %}
