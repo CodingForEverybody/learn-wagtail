@@ -6,7 +6,7 @@ from wagtail.core.models import Page
 
 
 class FlexPage(Page):
-    """Flexibile page class."""
+    """Flexible page class."""
 
     template = "flex/flex_page.html"
 
@@ -22,5 +22,3 @@ class FlexPage(Page):
     class Meta:  # noqa 
         verbose_name = "Flex Page"
         verbose_name_plural = "Flex Pages"
-
-    
