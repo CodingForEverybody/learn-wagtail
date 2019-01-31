@@ -10,7 +10,7 @@ class FlexPage(Page):
 
     template = "flex/flex_page.html"
 
-    # @todo add streamfields 
+    # @todo add streamfields
     # content = StreamField()
 
     subtitle = models.CharField(max_length=100, null=True, blank=True)
@@ -19,6 +19,6 @@ class FlexPage(Page):
         FieldPanel("subtitle"),
     ]
 
-    class Meta:  # noqa 
+    class Meta:  # noqa
         verbose_name = "Flex Page"
         verbose_name_plural = "Flex Pages"
