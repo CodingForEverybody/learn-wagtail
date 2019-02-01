@@ -1,3 +1,6 @@
 Django>=2.1,<2.2
 wagtail>=2.4,<2.5
 django-debug-toolbar==1.11
+black
+flake8
+isort
