@@ -32,7 +32,7 @@ class CardBlock(blocks.StructBlock):
                     "button_url",
                     blocks.URLBlock(
                         required=False,
-                        help_text="If the button page above is selected, that will be used first.",
+                        help_text="If the button page above is selected, that will be used first.",  # noqa
                     ),
                 ),
             ]
