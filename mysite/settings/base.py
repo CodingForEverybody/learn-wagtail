@@ -29,8 +29,10 @@ INSTALLED_APPS = [
     'flex',
     'streams',
     'site_settings',
+    'subscribers',
 
     'wagtail.contrib.forms',
+    'wagtail.contrib.modeladmin',
     'wagtail.contrib.redirects',
     'wagtail.contrib.settings',
     'wagtail.embeds',
