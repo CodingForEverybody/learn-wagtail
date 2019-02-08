@@ -82,3 +82,38 @@ class CTABlock(blocks.StructBlock):
         template = "streams/cta_block.html"
         icon = "placeholder"
         label = "Call to Action"
+
+
+class LinkStructValue(blocks.StructValue):
+    """Additional logic for our urls."""
+
+    def url(self):
+        button_page = self.get('button_page')
+        button_url = self.get('button_url')
+        if button_page:
+            return button_page.url
+        elif button_url:
+            return button_url
+
+        return None
+
+    # def latest_posts(self):
+    #     return BlogDetailPage.objects.live()[:3]
+
+
+class ButtonBlock(blocks.StructBlock):
+    """An external or internal URL."""
+
+    button_page = blocks.PageChooserBlock(required=False, help_text='If selected, this url will be used first')
+    button_url = blocks.URLBlock(required=False, help_text='If added, this url will be used secondarily to the button page')
+
+    # def get_context(self, request, *args, **kwargs):
+    #     context = super().get_context(request, *args, **kwargs)
+    #     context['latest_posts'] = BlogDetailPage.objects.live().public()[:3]
+    #     return context
+
+    class Meta:  # noqa
+        template = "streams/button_block.html"
+        icon = "placeholder"
+        label = "Single Button"
+        value_class = LinkStructValue
