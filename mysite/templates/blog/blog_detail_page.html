@@ -9,6 +9,15 @@
     <div class="container mt-5 mb-5">
         <div class="text-center">
             <h1>{{ self.custom_title }}</h1>
+            {% if self.categories.count %}
+                <div style="padding: 0 20px 20px">
+                    {% for cat in self.categories.all %}
+                        <a href="?category={{ cat.slug }}">
+                            {{ cat.name }}
+                        </a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                    </div>
+            {% endif %}
             <div class="d-flex justify-content-center">
                 {% for iter in self.blog_authors.all %}
                 {% image iter.author.image fill-50x50 as img %}
@@ -28,6 +37,17 @@
             </div>
         </div>
     </div>
+
+    <h2>Categories</h2>
+    <ul>
+        {% for cat in self.categories.all %}
+            <li>
+                <a href="{{ self.get_parent.url }}?category={{ cat.slug }}">
+                    {{ cat.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 
     <div class="container">
         <div class="row">

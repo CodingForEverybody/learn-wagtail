@@ -1,8 +1,9 @@
 """Blog listing and blog detail pages."""
+from django import forms
 from django.db import models
 from django.shortcuts import render
 
-from modelcluster.fields import ParentalKey
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     StreamFieldPanel,
@@ -74,6 +75,34 @@ class BlogAuthor(models.Model):
 register_snippet(BlogAuthor)
 
 
+class BlogCategory(models.Model):
+    """Blog catgory for a snippet."""
+
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(
+        verbose_name="slug",
+        allow_unicode=True,
+        max_length=255,
+        help_text='A slug to identify posts by this category',
+    )
+
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("slug"),
+    ]
+
+    class Meta:
+        verbose_name = "Blog Category"
+        verbose_name_plural = "Blog Categories"
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+register_snippet(BlogCategory)
+
+
 class BlogListingPage(RoutablePageMixin, Page):
     """Listing page lists all the Blog Detail Pages."""
 
@@ -94,6 +123,7 @@ class BlogListingPage(RoutablePageMixin, Page):
         """Adding custom stuff to our context."""
         context = super().get_context(request, *args, **kwargs)
         context["posts"] = BlogDetailPage.objects.live().public()
+        context["categories"] = BlogCategory.objects.all()
         return context
 
     @route(r'^latest/$', name="latest_posts")
@@ -133,6 +163,8 @@ class BlogDetailPage(Page):
         on_delete=models.SET_NULL,
     )
 
+    categories = ParentalManyToManyField("blog.BlogCategory", blank=True)
+
     content = StreamField(
         [
             ("title_and_text", blocks.TitleAndTextBlock()),
@@ -153,6 +185,12 @@ class BlogDetailPage(Page):
                 InlinePanel("blog_authors", label="Author", min_num=1, max_num=4)
             ],
             heading="Author(s)"
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("categories", widget=forms.CheckboxSelectMultiple)
+            ],
+            heading="Categories"
         ),
         StreamFieldPanel("content"),
     ]
