@@ -8,7 +8,16 @@
 
     <div class="container mt-5 mb-5">
         <div class="text-center">
-            <h1>{{ self.custom_title }}</h1>
+            <h1>
+                {% if self.custom_title %}
+                    {{ self.custom_title }}
+                {% else %}
+                    {{ self.title }}
+                {% endif %}
+            </h1>
+            {% if self.subtitle %}
+                <h3>{{ self.subtitle }}</h3>
+            {% endif %}
             {% if self.categories.count %}
                 <div style="padding: 0 20px 20px">
                     {% for cat in self.categories.all %}
@@ -37,16 +46,16 @@
         </div>
     </div>
 
-    <h2>Categories</h2>
-    <ul>
-        {% for cat in self.categories.all %}
-            <li>
-                <a href="{{ self.get_parent.url }}?category={{ cat.slug }}">
-                    {{ cat.name }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+    {% if self.intro_image %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    {% image self.intro_image fill-1400x400 as intro_img %}
+                    <img src="{{ intro_img.url }}" alt="{{ intro_img.alt }}">
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     <div class="container">
         <div class="row">
