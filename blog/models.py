@@ -122,6 +122,8 @@ class BlogListingPage(RoutablePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         """Adding custom stuff to our context."""
         context = super().get_context(request, *args, **kwargs)
+        # "posts" will have child pages; you'll need to use .specific in the template
+        # in order to access child properties, such as youtube_video_id and subtitle
         context["posts"] = BlogDetailPage.objects.live().public()
         context["categories"] = BlogCategory.objects.all()
         return context

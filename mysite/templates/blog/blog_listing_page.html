@@ -29,8 +29,8 @@
                 <div class="col-sm-9">
                     <a href="{{ post.url }}">
                         <h2>{{ post.custom_title }}</h2>
-                        {% if post.subtitle %}
-                            <p>{{ post.subtitle }}</p>
+                        {% if post.specific.subtitle %}
+                            <p>{{ post.specific.subtitle }}</p>
                         {% endif %}
 
                         {# @todo add a summary field to BlogDetailPage; make it a RichTextField with only Bold and Italic enabled. #}
