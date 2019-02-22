@@ -40,4 +40,42 @@
             </div>
         {% endfor %}
     </div>
+
+    {# Only show pagination if there is more than one page to click through #}
+    {% if posts.paginator.num_pages > 1 %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pagination">
+                        {% if posts.has_previous %}
+                            <li class="page-item">
+                                <a href="?page={{ posts.previous_page_number }}" class="page-link">
+                                    <span>&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for page_num in posts.paginator.page_range %}
+                            <li class="page-item {% if page_num == posts.number %} active{% endif %}">
+                                <a href="?page={{ page_num }}" class="page-link">
+                                    {{ page_num }}
+                                </a>
+                            </li>
+                        {% endfor %}
+
+                        {% if posts.has_next %}
+                            <li class="page-item">
+                                <a href="?page={{ posts.next_page_number }}" class="page-link">
+                                    <span>&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+
 {% endblock content %}
