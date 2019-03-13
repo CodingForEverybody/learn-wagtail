@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+
+    <style>
+        .contact-form {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .contact-form li {
+            margin-bottom: 1.5rem;
+        }
+        .contact-form label {
+            display: block;
+            font-weight: bold;
+        }
+        .contact-form .helptext {
+            display: block;
+            font-size: 80%;
+        }
+    </style>
+
+    <div class="container mt-5 mb-5">
+        <h1>{{ page.title }}</h1>
+        <p>
+            {{ self.intro|richtext }}
+        </p>
+
+        <form action="{% pageurl page %}" method="POST">
+            {% csrf_token %}
+            <ul class="contact-form">
+                {{ form.as_ul }}
+            </ul>
+
+            <button type="button" class="btn btn-success">
+                Submit Form
+            </button>
+        </form>
+    </div>
+
+{% endblock %}
