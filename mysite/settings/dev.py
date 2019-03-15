@@ -22,6 +22,16 @@ MIDDLEWARE = MIDDLEWARE + [
 
 INTERNAL_IPS = ("127.0.0.1", "172.17.0.1")
 
+# Uncomment this line to enable template caching
+# Dont forget to change the LOCATION path
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+#         "LOCATION": "/path/to/your/site/cache"
+#     }
+# }
+
+
 try:
     from .local import *
 except ImportError:

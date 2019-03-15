@@ -1,4 +1,4 @@
-{% load static wagtailuserbar menus_tags %}
+{% load static wagtailuserbar menus_tags cache %}
 
 {% get_menu "main" as navigation %}
 
@@ -45,11 +45,13 @@
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
 
-                    {% for item in navigation.menu_items.all %}
-                        <li>
-                            <a href="{{ item.link }}" class="nav-link"{% if item.open_in_new_tab %} target="_blank"{% endif %}>{{ item.title }}</a>
-                        </li>
-                    {% endfor %}
+                    {% cache 604800 navigation %}
+                        {% for item in navigation.menu_items.all %}
+                            <li>
+                                <a href="{{ item.link }}" class="nav-link"{% if item.open_in_new_tab %} target="_blank"{% endif %}>{{ item.title }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endcache %}
                 </ul>
             <!--
               <form class="form-inline my-2 my-lg-0">
@@ -63,27 +65,29 @@
 
         {% block content %}{% endblock %}
 
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    {% if settings.site_settings.SocialMediaSettings.facebook %}
-                        <a href="{{ settings.site_settings.SocialMediaSettings.facebook }}">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    {% endif %}
-                    {% if settings.site_settings.SocialMediaSettings.twitter %}
-                        <a href="{{ settings.site_settings.SocialMediaSettings.twitter }}">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    {% endif %}
-                    {% if settings.site_settings.SocialMediaSettings.youtube %}
-                        <a href="{{ settings.site_settings.SocialMediaSettings.youtube }}">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    {% endif %}
+        {% cache 604800 footer %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        {% if settings.site_settings.SocialMediaSettings.facebook %}
+                            <a href="{{ settings.site_settings.SocialMediaSettings.facebook }}">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        {% endif %}
+                        {% if settings.site_settings.SocialMediaSettings.twitter %}
+                            <a href="{{ settings.site_settings.SocialMediaSettings.twitter }}">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        {% endif %}
+                        {% if settings.site_settings.SocialMediaSettings.youtube %}
+                            <a href="{{ settings.site_settings.SocialMediaSettings.youtube }}">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endcache %}
 
         {# Global javascript #}
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
