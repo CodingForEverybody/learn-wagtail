@@ -19,6 +19,7 @@ from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page, Orderable
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.api.fields import ImageRenditionField
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.snippets.models import register_snippet
 
@@ -66,7 +67,17 @@ class BlogAuthorsOrderable(Orderable):
     api_fields = [
         APIField("author_name"),
         APIField("author_website"),
+        # This is using a custom django rest framework serializer
         APIField("author_image", serializer=ImageSerializedField()),
+        # The below APIField is using a Wagtail-built DRF Serializer that supports
+        # custom image rendition sizes
+        APIField(
+            "image",
+            serializer=ImageRenditionField(
+                'fill-200x250',
+                source="author_image"
+            )
+        ),
     ]
 
 
