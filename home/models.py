@@ -30,7 +30,13 @@ class HomePageCarouselImages(Orderable):
         related_name="+",
     )
 
-    panels = [ImageChooserPanel("carousel_image")]
+    panels = [
+        ImageChooserPanel("carousel_image")
+    ]
+
+    api_fields = [
+        APIField("carousel_image"),
+    ]
 
 
 class HomePage(RoutablePageMixin, Page):
@@ -56,13 +62,17 @@ class HomePage(RoutablePageMixin, Page):
         related_name="+",
     )
 
-    content = StreamField([("cta", blocks.CTABlock())], null=True, blank=True)
+    content = StreamField([
+        ("cta", blocks.CTABlock()),
+    ], null=True, blank=True)
 
     api_fields = [
         APIField("banner_title"),
         APIField("banner_subtitle"),
         APIField("banner_image"),
         APIField("banner_cta"),
+        APIField("carousel_images"),
+        APIField("content"),
     ]
 
     content_panels = Page.content_panels + [

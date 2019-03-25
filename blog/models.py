@@ -7,6 +7,7 @@ from django.db import models
 from django.shortcuts import render
 
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from wagtail.api import APIField
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     StreamFieldPanel,
@@ -34,6 +35,19 @@ class BlogAuthorsOrderable(Orderable):
 
     panels = [
         SnippetChooserPanel("author"),
+    ]
+
+    @property
+    def author_name(self):
+        return self.author.name
+
+    @property
+    def author_website(self):
+        return self.author.website
+
+    api_fields = [
+        APIField("author_name"),
+        APIField("author_website"),
     ]
 
 
@@ -215,6 +229,11 @@ class BlogDetailPage(Page):
             heading="Categories"
         ),
         StreamFieldPanel("content"),
+    ]
+
+    api_fields = [
+        APIField("blog_authors"),
+        APIField("content"),
     ]
 
     def save(self, *args, **kwargs):
