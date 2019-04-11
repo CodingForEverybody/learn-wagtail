@@ -7,4 +7,7 @@ register = template.Library()
 
 @register.simple_tag()
 def get_menu(slug):
-    return Menu.objects.get(slug=slug)
+    try:
+        return Menu.objects.get(slug=slug)
+    except Menu.DoesNotExist:
+        return Menu.objects.none()
