@@ -10,6 +10,8 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     StreamFieldPanel,
     PageChooserPanel,
+    ObjectList,
+    TabbedInterface,
 )
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
@@ -84,6 +86,18 @@ class HomePage(RoutablePageMixin, Page):
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
+            [InlinePanel("carousel_images", max_num=5, min_num=1, label="Image")],
+            heading="Carousel Images",
+        ),
+        StreamFieldPanel("content"),
+    ]
+
+    # This is how you'd normally hide promote and settings tabs
+    # promote_panels = []
+    # settings_panels = []
+
+    banner_panels = [
+        MultiFieldPanel(
             [
                 FieldPanel("banner_title"),
                 FieldPanel("banner_subtitle"),
@@ -92,12 +106,17 @@ class HomePage(RoutablePageMixin, Page):
             ],
             heading="Banner Options",
         ),
-        MultiFieldPanel(
-            [InlinePanel("carousel_images", max_num=5, min_num=1, label="Image")],
-            heading="Carousel Images",
-        ),
-        StreamFieldPanel("content"),
     ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading='Content'),
+            ObjectList(banner_panels, heading="Banner Settings"),
+            ObjectList(Page.promote_panels, heading='Promotional Stuff'),
+            ObjectList(Page.settings_panels, heading='Settings Stuff'),
+        ]
+    )
+
 
     class Meta:
 
