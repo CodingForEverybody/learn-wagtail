@@ -6,6 +6,16 @@
     {% image self.banner_image fill-1200x300 as banner %}
     <img src="{{ banner.url }}" alt="{{ banner.alt }}" style='width: 100%; height: auto;'>
 
+    {# Check if there are tags #}
+    {% if page.tags.count %}
+        <h1>Tags:</h1>
+        {% for tag in page.tags.all %}
+            {# Loop through all the existing tags #}
+            <a href="/blog/?tag={{ tag.slug }}">{{ tag }}</a><br />
+        {% endfor %}
+    {% endif %}
+
+
     <div class="container mt-5 mb-5">
         <div class="text-center">
             <h1>
