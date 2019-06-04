@@ -1,9 +1,9 @@
-Django>=2.1,<2.2
-wagtail>=2.4,<2.5
-django-debug-toolbar==1.11
+Django==2.2.2
+wagtail==2.5.1
+django-debug-toolbar==2.0a1
 ipython==7.3.0
 django-extensions==2.1.5
-black
+black==19.3b0
 flake8
 isort
 wagtail-django-recaptcha==1.0

@@ -4,11 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-wagtail = "<2.5,>=2.4"
-Django = ">=2.1,<2.2"
-wagtail-django-recaptcha = "*"
-django-debug-toolbar = "*"
-django-extensions = "*"
+wagtail = "==2.5.1"
+Django = "==2.2.2"
+wagtail-django-recaptcha = "==1.0"
+django-debug-toolbar = "==2.0a1"
+django-extensions = "==2.1.5"
+ipython = "==7.3.0"
+black = "==19.3b0"
+flake8 = "*"
+isort = "*"
 
 [dev-packages]
 "flake8" = "*"
