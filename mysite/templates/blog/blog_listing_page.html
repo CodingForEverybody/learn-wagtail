@@ -10,7 +10,7 @@
         Categories:
         <small>
             {% for cat in categories %}
-                <a href="?category={{ cat.slug }}">
+                <a href="{% routablepageurl page "category_view" cat.slug %}">
                     {{ cat.name }}
                 </a>{% if not forloop.last %}, {% endif %}
             {% endfor %}
