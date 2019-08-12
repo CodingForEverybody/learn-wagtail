@@ -127,6 +127,9 @@ class HomePage(RoutablePageMixin, Page):
         context = self.get_context(request, *args, **kwargs)
         return render(request, "home/subscribe.html", context)
 
+    def get_admin_display_title(self):
+        return "Custom Home Page Title"
+
 # # This will change the "title" field 's verbose name to "Custom Name".
 # # But you'd still reference it in the template as `page.title`
 # HomePage._meta.get_field("title").verbose_name = "Custom Name"
