@@ -7,3 +7,4 @@ black==19.3b0
 flake8
 isort
 wagtail-django-recaptcha==1.0
+django-allauth==0.40.0

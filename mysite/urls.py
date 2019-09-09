@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^api/v2/', api_router.urls),
 
     url(r'^sitemap.xml$', sitemap),
+    url(r'', include('allauth.urls')),
+    # url(r'^accounts/', include('allauth.urls')),
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:

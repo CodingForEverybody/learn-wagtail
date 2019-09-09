@@ -53,6 +53,18 @@
                         {% endfor %}
                     {% endcache %}
                 </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        {% if request.user.is_authenticated %}
+                            Hi {{ request.user.username }},
+                            <a href="{% url 'account_logout' %}" class="nav-link d-inline">Logout?</a>
+                        {% else %}
+                            Hi Guest!
+                            <a href="{% url 'account_login' %}" class="nav-link d-inline">Login?</a>
+
+                        {% endif %}
+                    </li>
+                </ul>
             <!--
               <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
