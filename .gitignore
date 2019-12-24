@@ -39,3 +39,6 @@ Thumbs.db
 Desktop.ini
 
 media/*
+
+# Envs
+.venv/
