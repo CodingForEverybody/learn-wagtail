@@ -1,5 +1,5 @@
-Django==2.2.2
-wagtail==2.5.1
+Django==2.2.9
+wagtail==2.7
 django-debug-toolbar==2.0a1
 ipython==7.3.0
 django-extensions==2.1.5
