@@ -97,7 +97,14 @@ class HomePage(RoutablePageMixin, Page):
         APIField("banner_cta", serializer=BannerCTASerializer()),
         APIField("carousel_images"),
         APIField("content"),
+        APIField("a_custom_api_response"),
     ]
+
+    @property
+    def a_custom_api_response(self):
+        # return ["SOMETHING CUSTOM", 3.14, [1, 2, 3, 'a', 'b', 'c']]
+        # logic goes in here
+        return f"Banner Title Is: {self.banner_title}"
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
