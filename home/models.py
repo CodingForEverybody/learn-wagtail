@@ -17,6 +17,9 @@ from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+
+from rest_framework.fields import Field
+
 from streams import blocks
 
 
@@ -39,6 +42,18 @@ class HomePageCarouselImages(Orderable):
     api_fields = [
         APIField("carousel_image"),
     ]
+
+
+class BannerCTASerializer(Field):
+    def to_representation(self, page):
+        return {
+            'id': page.id,
+            'title': page.title,
+            'first_published_at': page.first_published_at,
+            'owner': page.owner.username,
+            'slug': page.slug,
+            'url': page.url,
+        }
 
 
 class HomePage(RoutablePageMixin, Page):
@@ -79,7 +94,7 @@ class HomePage(RoutablePageMixin, Page):
         APIField("banner_title"),
         APIField("banner_subtitle"),
         APIField("banner_image"),
-        APIField("banner_cta"),
+        APIField("banner_cta", serializer=BannerCTASerializer()),
         APIField("carousel_images"),
         APIField("content"),
     ]
