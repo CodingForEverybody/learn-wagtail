@@ -152,6 +152,30 @@ class BlogCategory(models.Model):
 register_snippet(BlogCategory)
 
 
+class BlogChildPagesSerializer(Field):
+    def to_representation(self, child_pages):
+        # logic in here
+        return_posts = []
+        for child in child_pages:
+            post_dict = {
+                'id': child.id,
+                'title': child.title,
+                'slug': child.slug,
+                'url': child.url,
+            }
+            return_posts.append(post_dict)
+        return return_posts
+        # Pythonic comprehensions
+        # return [
+        #     {
+        #         'id': child.id,
+        #         'title': child.title,
+        #         'slug': child.slug,
+        #         'url': child.url,
+        #     } for child in child_pages
+        # ]
+
+
 class BlogListingPage(RoutablePageMixin, Page):
     """Listing page lists all the Blog Detail Pages."""
 
@@ -170,6 +194,15 @@ class BlogListingPage(RoutablePageMixin, Page):
     content_panels = Page.content_panels + [
         FieldPanel("custom_title"),
     ]
+
+    api_fields = [
+        APIField("posts", serializer=BlogChildPagesSerializer(source='get_child_pages')),
+    ]
+
+    @property
+    def get_child_pages(self):
+        return self.get_children().public().live()
+        # return self.get_children().public().live().values("id", "title", "slug")
 
     def get_context(self, request, *args, **kwargs):
         """Adding custom stuff to our context."""
