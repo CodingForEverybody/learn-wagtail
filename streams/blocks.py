@@ -1,6 +1,7 @@
 """Streamfields live in here."""
 
 from wagtail.core import blocks
+from wagtail.core.templatetags.wagtailcore_tags import richtext
 from wagtail.images.blocks import ImageChooserBlock
 
 
@@ -47,6 +48,9 @@ class CardBlock(blocks.StructBlock):
 
 class RichtextBlock(blocks.RichTextBlock):
     """Richtext with all the features."""
+
+    def get_api_representation(self, value, context=None):
+        return richtext(value.source)
 
     class Meta:  # noqa
         template = "streams/richtext_block.html"
