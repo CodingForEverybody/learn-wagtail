@@ -9,7 +9,7 @@ class SubscriberAdmin(ModelAdmin):
     """Subscriber admin."""
 
     model = Subscribers
-    menu_label = "Susbcribers"
+    menu_label = "Subscribers"
     menu_icon = "placeholder"
     menu_order = 290
     add_to_settings_menu = False
