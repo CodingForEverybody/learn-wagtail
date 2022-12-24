@@ -1,39 +1,24 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, path
 from django.contrib import admin
-from django.urls import path
 
 from wagtail.admin import urls as wagtailadmin_urls
-from wagtail.core import urls as wagtail_urls
-from wagtail.contrib.sitemaps.views import sitemap
+from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
 from .api import api_router
 
-
 urlpatterns = [
-    url(r'^django-admin/', admin.site.urls),
+    path("django-admin/", admin.site.urls),
+    path("admin/", include(wagtailadmin_urls)),
+    path("documents/", include(wagtaildocs_urls)),
+    path("search/", search_views.search, name="search"),
+    path('api/v2/', api_router.urls),
 
-    url(r'^admin/', include(wagtailadmin_urls)),
-    url(r'^documents/', include(wagtaildocs_urls)),
-
-    url(r'^search/$', search_views.search, name='search'),
-
-    url(r'^api/v2/', api_router.urls),
-
-    url(r'^sitemap.xml$', sitemap),
-    url(r'', include('allauth.urls')),
-    # url(r'^accounts/', include('allauth.urls')),
-    # For anything not caught by a more specific rule above, hand over to
-    # Wagtail's page serving mechanism. This should be the last pattern in
-    # the list:
-    url(r'', include(wagtail_urls)),
-
-    # Alternatively, if you want Wagtail pages to be served from a subpath
-    # of your site, rather than the site root:
-    #    url(r'^pages/', include(wagtail_urls)),
+    # ...
+    path(r'', include(wagtail_urls)),
 ]
 
 
@@ -45,7 +30,12 @@ if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
+urlpatterns = urlpatterns + [
+    # For anything not caught by a more specific rule above, hand over to
+    # Wagtail's page serving mechanism. This should be the last pattern in
+    # the list:
+    path("", include(wagtail_urls)),
+    # Alternatively, if you want Wagtail pages to be served from a subpath
+    # of your site, rather than the site root:
+    #    path("pages/", include(wagtail_urls)),
+]
